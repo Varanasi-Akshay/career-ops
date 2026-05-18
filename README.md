@@ -16,7 +16,7 @@
   <img src="https://img.shields.io/badge/Claude_Code-000?style=flat&logo=anthropic&logoColor=white" alt="Claude Code">
   <img src="https://img.shields.io/badge/OpenCode-111827?style=flat&logo=terminal&logoColor=white" alt="OpenCode">
   <img src="https://img.shields.io/badge/Gemini_CLI-4285F4?style=flat&logo=google&logoColor=white" alt="Gemini CLI">
-  <img src="https://img.shields.io/badge/Codex_(soon)-6B7280?style=flat&logo=openai&logoColor=white" alt="Codex">
+  <img src="https://img.shields.io/badge/Codex-111827?style=flat&logo=openai&logoColor=white" alt="Codex">
   <img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white" alt="Node.js">
   <img src="https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white" alt="Go">
   <img src="https://img.shields.io/badge/Playwright-2EAD33?style=flat&logo=playwright&logoColor=white" alt="Playwright">
@@ -57,7 +57,7 @@ Career-Ops turns any AI coding CLI into a full job search command center. Instea
 
 > **Important: This is NOT a spray-and-pray tool.** Career-ops is a filter -- it helps you find the few offers worth your time out of hundreds. The system strongly recommends against applying to anything scoring below 4.0/5. Your time is valuable, and so is the recruiter's. Always review before submitting.
 
-Career-ops is agentic: Claude Code navigates career pages with Playwright, evaluates fit by reasoning about your CV vs the job description (not keyword matching), and adapts your resume per listing.
+Career-ops is agentic: Codex, Claude Code, Gemini CLI, or OpenCode can navigate career pages with Playwright, evaluate fit by reasoning about your CV vs the job description (not keyword matching), and adapt your resume per listing.
 
 > **Heads up: the first evaluations won't be great.** The system doesn't know you yet. Feed it context -- your CV, your career story, your proof points, your preferences, what you're good at, what you want to avoid. The more you nurture it, the better it gets. Think of it as onboarding a new recruiter: the first week they need to learn about you, then they become invaluable.
 
@@ -73,7 +73,7 @@ Built by someone who used it to evaluate 740+ job offers, generate 100+ tailored
 | **Negotiation Scripts** | Salary negotiation frameworks, geographic discount pushback, competing offer leverage |
 | **ATS PDF Generation** | Keyword-injected CVs with Space Grotesk + DM Sans design |
 | **Portal Scanner** | 45+ companies pre-configured (Anthropic, OpenAI, ElevenLabs, Retool, n8n...) + custom queries across Ashby, Greenhouse, Lever, Wellfound |
-| **Batch Processing** | Parallel evaluation with `claude -p` workers |
+| **Batch Processing** | Parallel evaluation with CLI workers such as `codex exec "prompt"` or `claude -p "prompt"` |
 | **Dashboard TUI** | Terminal UI to browse, filter, and sort your pipeline |
 | **Human-in-the-Loop** | AI evaluates and recommends, you decide and act. The system never submits an application -- you always have the final call |
 | **Pipeline Integrity** | Automated merge, dedup, status normalization, health checks |
@@ -109,9 +109,61 @@ claude   # Open Claude Code in this directory
 # Paste a job URL or run /career-ops
 ```
 
-> **The system is designed to be customized by Claude itself.** Modes, archetypes, scoring weights, negotiation scripts -- just ask Claude to change them. It reads the same files it uses, so it knows exactly what to edit.
+> **The system is designed to be customized by your coding agent.** Modes, archetypes, scoring weights, negotiation scripts -- just ask Claude, Codex, or another supported coding agent to change them. It reads the same files it uses, so it knows exactly what to edit.
 
 See [docs/SETUP.md](docs/SETUP.md) for the full setup guide.
+
+## Codex Integration
+
+Career-ops works with Codex through the canonical `AGENTS.md` instructions and the `.agents/skills/career-ops` skill.
+
+### Run with Codex
+
+```bash
+cd /Users/akshaykumarvaranasi/Desktop/career-ops
+codex
+```
+
+Then use the same `/career-ops` command family inside Codex:
+
+```text
+/career-ops
+/career-ops scan
+/career-ops pipeline
+/career-ops pdf
+```
+
+To evaluate one job, paste the job URL or job description directly:
+
+```text
+/career-ops https://example.com/jobs/senior-ai-engineer
+```
+
+For batch/headless worker prompts, prefer:
+
+```bash
+codex exec "prompt"
+```
+
+### Browser Output
+
+Career-ops does not run a browser dashboard server by default. Browser-viewable outputs are generated files:
+
+- Tailored resumes and cover letters appear in `output/*.pdf`.
+- Evaluation reports appear in `reports/*.md`.
+- The pipeline dashboard is a terminal UI, not a browser app.
+
+On macOS, open generated PDFs in your browser or default PDF viewer with:
+
+```bash
+open output/*.pdf
+```
+
+If using Codex Desktop, you can also ask Codex:
+
+```text
+Open the latest generated PDF in the browser
+```
 
 ## Gemini CLI Integration
 
@@ -174,8 +226,11 @@ Career-ops is a single slash command with multiple modes:
 /career-ops pipeline       → Process pending URLs
 /career-ops contacto       → LinkedIn outreach message
 /career-ops deep           → Deep company research
+/career-ops interview-prep → Generate company-specific interview prep
 /career-ops training       → Evaluate a course/cert
 /career-ops project        → Evaluate a portfolio project
+/career-ops patterns       → Analyze rejection patterns and improve targeting
+/career-ops followup       → Follow-up cadence and draft follow-up messages
 ```
 
 Or just paste a job URL or description directly -- career-ops auto-detects it and runs the full pipeline.
