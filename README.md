@@ -284,6 +284,60 @@ go build -o career-dashboard .
 
 Features: 6 filter tabs, 4 sort modes, grouped/flat view, lazy-loaded previews, inline status changes.
 
+## Static Browser Dashboard
+
+For Codex Desktop or any browser-based review flow, generate a local static dashboard:
+
+```bash
+npm run dashboard:static
+open static-dashboard/index.html
+```
+
+For phone access on the same Wi-Fi, serve the dashboard from your Mac:
+
+```bash
+npm run dashboard:mobile
+```
+
+Open the printed `http://<your-mac-ip>:4173` URL on your phone. This command regenerates the dashboard first, then serves the repo root so report and PDF links keep working.
+
+The page reads `data/applications.md`, `data/pipeline.md`, and `reports/*.md`, then creates a dashboard with score filters, pending-job review, search, links to reports, and links to generated PDFs. The generated `static-dashboard/index.html` file is ignored because it contains your private job-search data; rerun the command whenever you add reports or pipeline items.
+
+The dashboard is interactive even though it is static:
+
+- Open a role and use **Apply / View Post** to jump to the application page.
+- Mark each job as `Interested`, `Applying`, `Applied`, `Interviewing`, `Skipped`, or `No`.
+- Add private per-job notes for recruiter names, follow-ups, interview dates, or decision context.
+- Use **Copy Eval Command** on pending jobs to copy the exact `/career-ops <job-url>` command.
+- Review the **Career Coach** panel for skills repeatedly showing up across the current pipeline.
+- Mark skill progress as `Plan`, `Doing`, or `Done`.
+
+Progress is saved in browser local storage. To move it between your laptop and phone, click **Export Progress**, save the JSON file into your synced folder, then use **Import** on the other device. Because this repo is synced with Google Drive, you can also open `static-dashboard/index.html` from Drive on mobile, but the local server command is more reliable when you want full JavaScript interactivity and working report/PDF links.
+
+### Google Drive Progress Sync
+
+For a dashboard opened from Google Drive on mobile, use the included Apps Script bridge so interactions are saved back to Drive:
+
+1. Open [script.google.com](https://script.google.com/).
+2. Create a new project.
+3. Paste [apps-script/Code.gs](apps-script/Code.gs) into the project.
+4. Deploy it as a Web App with **Execute as: Me** and **Who has access: Anyone with the link**.
+5. Copy the Web App URL.
+6. Open `static-dashboard/index.html` from Drive, paste the URL into **Drive Sync URL**, then use **Load Drive** and **Save Drive**.
+
+The dashboard only accepts `https://script.google.com/...` or `https://script.googleusercontent.com/...` sync URLs.
+
+## GitHub Pages Website
+
+This fork includes a public GitHub Pages entrypoint at [docs/index.html](docs/index.html). It is intentionally a public overview and does not include your private tracker, reports, PDFs, or dashboard state.
+
+To enable it in GitHub:
+
+1. Open the repository settings for `Varanasi-Akshay/career-ops`.
+2. Go to **Pages**.
+3. Set source to `main` and folder to `/docs`.
+4. Save, then open `https://varanasi-akshay.github.io/career-ops/`.
+
 ## Project Structure
 
 ```
@@ -309,11 +363,13 @@ career-ops/
 │   ├── batch-prompt.md          # Self-contained worker prompt
 │   └── batch-runner.sh          # Orchestrator script
 ├── dashboard/                   # Go TUI pipeline viewer
+├── static-dashboard/            # Generated browser dashboard (gitignored output)
 ├── data/                        # Your tracking data (gitignored)
 ├── reports/                     # Evaluation reports (gitignored)
 ├── output/                      # Generated PDFs (gitignored)
 ├── fonts/                       # Space Grotesk + DM Sans
-├── docs/                        # Setup, customization, architecture
+├── docs/                        # Setup, customization, architecture, GitHub Pages site
+├── apps-script/                 # Optional Google Drive progress sync
 └── examples/                    # Sample CV, report, proof points
 ```
 

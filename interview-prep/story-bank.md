@@ -24,3 +24,21 @@ This file accumulates your best interview stories over time. Each evaluation (Bl
 **Reflection:** What I learned / what I'd do differently
 **Best for questions about:** [list of question types this story answers]
 -->
+
+### [Healthcare ML] Oncology Time-to-Next-Treatment Modeling
+**Source:** Report #001 - Upperline Health - Machine Learning Engineer
+**S (Situation):** An Omdena healthcare project needed data-driven insight into immunotherapy-based oncology patient treatment timing.
+**T (Task):** Estimate time-to-next-treatment using patient demographics, diagnosis, and prior prescription history.
+**A (Action):** Engineered patient-level features, experimented with survival-analysis models, and evaluated DeepSurv.
+**R (Result):** Achieved best model performance with DeepSurv at c-index 0.715 and supported patient sentiment analysis using Tableau.
+**Reflection:** Healthcare ML requires careful feature definitions, explicit assumptions, and humility around clinical context.
+**Best for questions about:** healthcare data, feature engineering, learning a new domain, model evaluation.
+
+### [Production ML] PriceEasy Product Recognition Pipeline
+**Source:** Report #001 - Upperline Health - Machine Learning Engineer
+**S (Situation):** PriceEasy needed in-store product recognition to support survey automation and retail analytics.
+**T (Task):** Prototype, benchmark, and productionize a computer-vision model suitable for low-latency mobile inference.
+**A (Action):** Benchmarked OpenAI CLIP and multiple deep-learning architectures, then deployed an EfficientNet-based classifier.
+**R (Result):** Achieved 0.92 accuracy and integrated the model into an end-to-end survey automation pipeline.
+**Reflection:** Strong ML engineering means choosing the model that fits the operational constraint, not just the most impressive benchmark.
+**Best for questions about:** ML deployment, productionization, computer vision, model trade-offs.

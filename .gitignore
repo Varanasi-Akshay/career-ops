@@ -34,6 +34,8 @@ modes/_profile.md
 .resolved-prompt-*
 node_modules/
 bun.lock
+static-dashboard/*
+!static-dashboard/.gitkeep
 
 # OS
 .DS_Store
